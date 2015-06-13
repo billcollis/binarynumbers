@@ -1,0 +1,125 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Binary Numbers</title>
+    <link rel="stylesheet" href="jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #footer{
+            float: left;
+            position:fixed;
+            bottom:0px;
+            width:100%
+        } 
+        .sortable {
+            list-style-type: none;
+            margin-top: 1em;
+            padding: 0;
+            width: 1240px;
+        }
+        .sortable li {
+            padding: 1px;
+            float: left;
+            width: 70px;
+            height: 70px;
+            font-size: 2em;
+            text-align: center;
+        }
+         #bin { 
+            margin-top: 3em; 
+            float: left;
+            padding: 0;
+            clear:left;
+         }
+         #hex { 
+            margin-top: 0; 
+            float: left;
+            padding: 0;
+            clear:left
+         }
+         .binarybtn{
+            width: 70px;
+            height: 60px;
+            border-radius: 4px;
+            padding: 3px;
+            text-align: center;
+            font-size: 1.7em;
+            
+         }
+         .hexbtn{
+            width: 292px;
+            height: 60px;
+            border-radius: 4px;
+            padding: 3px;
+            text-align: center;
+            font-size: 1.7em;
+         }
+         .txtbtn{
+            width: 90px;
+            height: 60px;
+            border-radius: 4px;
+            padding: 3px;
+            text-align: center;
+            font-size: 1.7em;
+         }
+         .question{
+             margin-top: 2em; 
+             float: left;
+             font-size: 1.7em;
+             clear:left
+         }
+         .start{
+             width:190px;
+             border-radius: 4px;
+             padding: 3px;
+             text-align: center;
+             font-size: 1em;
+         }
+    </style>
+</head>
+<body>
+    <h1>Drag and drop the numbers to sort them (most significant to least significant) then answer the questions</h1>
+    <ul id="sorters" class="sortable" ></ul>
+
+    <div id="bin" hidden="hidden">
+        <input type="checkbox" name="bin" id="check15" value="32768"><label for="check15" class="binarybtn">0</label>
+        <input type="checkbox" name="bin" id="check14" value="16384"><label for="check14" class="binarybtn">0</label>
+        <input type="checkbox" name="bin" id="check13" value="8192"><label for="check13" class="binarybtn">0</label>
+        <input type="checkbox" name="bin" id="check12" value="4096"><label for="check12" class="binarybtn">0</label>
+        <input type="checkbox" name="bin" id="check11" value="2048"><label for="check11" class="binarybtn">0</label>
+        <input type="checkbox" name="bin" id="check10" value="1024"><label for="check10" class="binarybtn">0</label>
+        <input type="checkbox" name="bin" id="check9" value="512"><label for="check9" class="binarybtn">0</label>
+        <input type="checkbox" name="bin" id="check8" value="256"><label for="check8" class="binarybtn">0</label>
+        <input type="checkbox" name="bin" id="check7" value="128"><label for="check7" class="binarybtn">0</label>
+        <input type="checkbox" name="bin" id="check6" value="64"><label for="check6" class="binarybtn">0</label>
+        <input type="checkbox" name="bin" id="check5" value="32"><label for="check5" class="binarybtn">0</label>
+        <input type="checkbox" name="bin" id="check4" value="16"><label for="check4" class="binarybtn">0</label>
+        <input type="checkbox" name="bin" id="check3" value="8"><label for="check3" class="binarybtn">0</label>
+        <input type="checkbox" name="bin" id="check2" value="4"><label for="check2" class="binarybtn">0</label>
+        <input type="checkbox" name="bin" id="check1" value="2"><label for="check1" class="binarybtn">0</label>
+        <input type="checkbox" name="bin" id="check0" value="1"><label for="check0" class="binarybtn">0</label>
+        <input type="checkbox" id="bintxt"><label for="bintxt" class="txtbtn">BIN</label>
+    </div>
+    <br/>
+    <div id="hex" hidden="hidden">
+        <input type="checkbox" id="hex3" value="3"><label for="hex3" class="hexbtn">0</label>
+        <input type="checkbox" id="hex2" value="2"><label for="hex2" class="hexbtn">0</label>
+        <input type="checkbox" id="hex1" value="1"><label for="hex1" class="hexbtn">0</label>
+        <input type="checkbox" id="hex0" value="0"><label for="hex0" class="hexbtn">0</label>
+        <input type="checkbox" id="hexe" ><label for="hexe" class="txtbtn">HEX</label>
+    </div>
+
+    <div id="question" hidden="hidden" class="question">
+        <button id="start" onclick="start()" class="start ui-state-default">START</button>
+        <label>  </label>
+        <label id="value"></label>
+        <label id="total"></label>
+    </div>
+
+    <script type="text/javascript" src="BinaryNumbers.js"></script>
+<footer id="footer">Bill Collis 2015</footer>
+</body>
+</html>
