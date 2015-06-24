@@ -1,17 +1,17 @@
 ﻿"use strict";
 
 //by Bill Collis  www.techideas.co.nz & www.XplainItToMe.com
-//idea adapted from Tim Bell's work http://csunplugged.org/ 
+//idea adapted from Tim Bell's work csunplugged.org
 //copyright 
 
-//sort 15 tiles in the binary sequence (the 16th tile is fixed in position)
+//sort 15 tiles in the binary sequence (the number1, the 16th tile is fixed in position)
 
 
 //html document is ready so begin
 $(document).ready(function () {
     $(".sortable").sortable(                //jquery sortable functions
         {
-            update: function (event, ui)    //event for when the user has mived a sortable tile
+            update: function (event, ui)    //event for when the user has moved a sortable tile
             {
                 checkpositions(ui.item[0].dataset.value, ui.item.index()); //check to see if the tiles are in order
                 if (sortersInOrder)
@@ -38,13 +38,14 @@ $("#start").button();                       //generates a random number for the 
 //this creates the 16 tiles the user must sort (note the last tile arr[0] is the '1' and is not sortable
 function createSorters()
 {
-    var ul = document.getElementById("sorters")         //find the unorder list 
-    var arr = [15, 14, 13, 12, 11, 10, 9, 8,7, 6, 5, 4, 3, 2, 1] //array of 15 numbers for the powers of 2. s^15=32768 ... 2^1=2
+    //var ul = document.getElementById("sorters")       //find the unorder list 
+    var ul = $("#sorters")                              //find the unorder list - not quite the same as the above as it returns an array
+    var arr = [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1] //array of 15 numbers for the powers of 2. s^15=32768 ... 2^1=2
     shuffle(arr);                                       //mess up the numbers in the array
     arr.unshift(0);                                     //add 0 to end of the array for 2^0 = 1
     for (var i = 15; i >= 0; i--) {
         var li = document.createElement('li');          //list element
-        ul.appendChild(li);                             //add list element
+        ul[0].appendChild(li);                          //add list element
         li.className += " ui-state-default";            //add css
         li.setAttribute("id","sorter"+arr[i])           //give each li element a unique id
         li.dataset.value = arr[i];                      //creates a data element for each li element with a strin gof the power in it
@@ -61,25 +62,23 @@ function checkpositions(value, index) {
     var newpos = parseInt(value,10);                    //get the value of the tile
     index = 15 - index                                  //ui is from right to left, we need L to R
     if (index === newpos) {                             //is it in the right place
-        var lis = document.getElementById("sorters").getElementsByTagName("li");
-        //var x = "";
+        //var lis = document.getElementById("sorters").getElementsByTagName("li");
+        var lis = $("#sorters li") //same as above line -  returns only li elements in sorters
         var count = 0;                                  //we check t14 times to see if the 15 tiles are in order
         for (var i = 0; i < 15; i++) {
-            //x += ":" + lis[i].dataset.value;
-            if (lis[i].dataset.value > lis[i + 1].dataset.value)    //check if the tile we have come to is > the tile toits left
+            if (lis[i].dataset.value > lis[i + 1].dataset.value)    //check if the tile we have come to is > the tile to its left
                 count++;
         }
         if (count === 14)                               //if we have found 14 true comparisons the 15 tiles muts be in order
             sortersInOrder = true;
     }
-    else {                                              //the tiles are not sorted, we put thi shere so that if the user moves the tiles once they are playing , then the buttons become hidden again
-        sortersInOrder = false;
-        var b = document.getElementById("bin")
-        b.hidden = "hidden";
-        var h = document.getElementById("hex")
-        h.hidden = "hidden";
-        var q = document.getElementById("question")
-        q.hidden = "hidden";
+    else {                                              //the tiles are not sorted, I put this here so that if the user moves the tiles once they are playing , then the buttons become hidden again
+        if (sortersInOrder = true){
+            sortersInOrder = false;
+            $("#bin").hide().fadeOut();
+            $("#hex").hide().fadeOut();
+            $("#question").hide().fadeOut();
+        }
     }
 }
 
@@ -120,7 +119,7 @@ $("input[name='bin']").on("change", function () {
     $("#hex0").button('option', 'label', hexstr[3]);
 
     //show the user their total so far
-    document.getElementById("total").innerHTML = "   (your total:"+total+")";
+    $("#total")[0].innerHTML = "   (your total:" + total + ")";
     clickcount++;                   //add to the click count
     
     //the user has got it right
@@ -143,7 +142,7 @@ $("input[name='bin']").on("change", function () {
         now = Math.round(now);
 
         message += " --- (you made " + (clickcount - correctnumbits) / 2 + " errors   and took " + now + " seconds)";
-        document.getElementById("total").innerHTML = message;           //show the message in the HTML document
+        $("#total")[0].innerHTML = message;           //show the message in the HTML document
     }
 
 });
@@ -151,14 +150,15 @@ $("input[name='bin']").on("change", function () {
 //user has sorted the tiles and presses the start button to generate a random number
 function start() 
 {
-    for (var i = 0; i < 16; i++) {                      //make sure all the bin buttons are unchecked
+    var i = 0;
+    for (i = 0; i < 16; i++) {                      //make sure all the bin buttons are unchecked
         $("#check" + i).prop('checked', false);
     }
     
-    for (var i = 0; i < 16; i++) {                      //all bin buttons back to 0
+    for (i = 0; i < 16; i++) {                      //all bin buttons back to 0
         $("#check" + i).button('option', 'label', 0)
     }
-    for (var i = 0; i < 4; i++) {                       //all the hex buttons back to 0
+    for (i = 0; i < 4; i++) {                       //all the hex buttons back to 0
         $("#hex" + i).button('option', 'label', 0)
     }
     question = 0;                                       
@@ -175,60 +175,51 @@ function start()
     min = 1;
     var rnd = Math.floor(Math.random() * (max - min + 1)) + min;    //make a random number 1 to 5
     if (rnd % 5 === 0)                                              //see if the rnd/5 ===0 
-        document.getElementById("value").innerHTML = "Click the binary digits for: 0x" + question.toString(16).toUpperCase();
+        $("#value")[0].innerHTML = "Click the binary digits for: 0x" + question.toString(16).toUpperCase();
     else
-        document.getElementById("value").innerHTML = "Click the binary digits for: " + question;
-    document.getElementById("total").innerHTML = "";
+        $("#value")[0].innerHTML = "Click the binary digits for: " + question;
+    $("#total")[0].innerHTML = "";
     
     //number of bits in correct answer - used to calculate how many extra clicks the user took
     var s = question.toString(2);
-    for (var i = 0; i < s.length; i++)
+    for (i = 0; i < s.length; i++)
         if (s[i] === "1")
             correctnumbits++;
 }
 
-//show the bin and hex buttons to the user
+//reveal the bin and hex buttons to the user
 function displayBin()
 {
-    var bdiv = document.getElementById("bin")
-    bdiv.hidden = false;
-
-    //display hex
-    var hdiv = document.getElementById("hex")
-    hdiv.hidden = false;
-    var q = document.getElementById("question")
-    q.hidden = false;
+    $("#bin").hide().fadeIn(700);
+    $("#hex").hide().fadeIn(1400);
+    $("#question").hide().fadeIn(2100);
 }
 
 //mix up the 15 numbers in the array
 function shuffle(array) 
 {
-    var temporaryvalue;
+    var temp;
     //for testing purposes uncomment this code so that only the middle 3 tiles need sorting
-    /*
-    for (var i = 0; i < 6; i++) //temp shuffle the middle 3 only for quicker testing puposes
+    ///*
+    for (var i = 0; i < 6; i++) //order all but the middle 3 tiles
     {
-        temporaryvalue = array[i];
+        temp = array[i];
         array[i] = array[14-i];
-        array[14-i] = temporaryvalue
+        array[14-i] = temp
     }
     return array;
-    */
-
+    //*/
     //shuffle the 15 tiles - every tile will be out of place
-    var currentIndex = array.length, temporaryValue, randomIndex;
-
+    var currentIndex = array.length
+    var randomIndex;
     // while there remain tiles to shuffle...
-    while (0 !== currentIndex) {
-
-        // Pick a remaining tile...
-        randomIndex = Math.floor(Math.random() * currentIndex);
+    while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex); // Pick a remaining tile...
         currentIndex -= 1;
-
-        // And swap it with the current tile.
-        temporaryValue = array[currentIndex];
+        // swap 2 values.
+        temp = array[currentIndex];
         array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
+        array[randomIndex] = temp;
     }
     return array;
 }
