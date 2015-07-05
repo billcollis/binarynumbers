@@ -200,7 +200,7 @@ function shuffle(array)
 {
     var temp;
     //for testing purposes uncomment this code so that only the middle 3 tiles need sorting
-    ///*
+    /*
     for (var i = 0; i < 6; i++) //order all but the middle 3 tiles
     {
         temp = array[i];
