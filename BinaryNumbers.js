@@ -140,8 +140,12 @@ $("input[name='bin']").on("change", function () {
         else 
             message = " --- You need a little more practice"
         now = Math.round(now);
-
-        message += " --- (you made " + (clickcount - correctnumbits) / 2 + " errors   and took " + now + " seconds)";
+		
+		var errors = (clickcount - correctnumbits) / 2;
+		if (errors === 1)
+			message += " --- (you made 1 error and took " + now + " seconds)";
+		else
+			message += " --- (you made " + (clickcount - correctnumbits) / 2 + " errors   and took " + now + " seconds)";
         $("#total")[0].innerHTML = message;           //show the message in the HTML document
     }
 
@@ -200,7 +204,7 @@ function shuffle(array)
 {
     var temp;
     //for testing purposes uncomment this code so that only the middle 3 tiles need sorting
-    /*
+    ///*
     for (var i = 0; i < 6; i++) //order all but the middle 3 tiles
     {
         temp = array[i];
